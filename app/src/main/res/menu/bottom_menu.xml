@@ -12,7 +12,13 @@
         />
     <item
         android:id="@+id/menu_profile"
-        android:title="프로필"
         android:icon="@drawable/ic_baseline_account_box_24"
-        />
+        android:title="프로필" />
+    <item
+        android:id="@+id/menu_manbo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/dogwalk"
+        android:iconTint="@color/white"
+        android:title="만보기" />
 </menu>

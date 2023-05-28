@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.fragments_frame, profileFragment)
                     .commitNow()
             }
+            R.id.menu_manbo -> {
+                val manboFragment = ManboFragment.newInstance()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragments_frame, manboFragment)
+                    .commitNow()
+            }
         }
         true
     }
