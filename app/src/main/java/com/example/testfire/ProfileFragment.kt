@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -43,7 +40,9 @@ class ProfileFragment : Fragment() {
     }
 
     private lateinit var profileImageView: ImageView
-
+    private lateinit var dogClassEditText: EditText
+    private lateinit var dogAgeEditText: EditText
+    private lateinit var dogWeightEditText: EditText
     private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             imageUri = result.data?.data //이미지 경로 원본
@@ -77,6 +76,9 @@ class ProfileFragment : Fragment() {
         val email = view.findViewById<TextView>(R.id.profile_textview_email)
         val name = view.findViewById<TextView>(R.id.profile_textview_name)
         val button = view.findViewById<Button>(R.id.profile_button)
+        dogClassEditText = view.findViewById(R.id.dogclass)
+        dogAgeEditText = view.findViewById(R.id.dogage)
+        dogWeightEditText = view.findViewById(R.id.dogweight)
 
         //프로필 구현
         fireDatabase.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -90,6 +92,9 @@ class ProfileFragment : Fragment() {
                     .into(profileImageView)
                 email?.text = userProfile?.email
                 name?.text = userProfile?.name
+                dogClassEditText.setText(userProfile?.dog?.dclass) // 견종 설정
+                dogAgeEditText.setText(userProfile?.dog?.dage) // 나이 설정
+                dogWeightEditText.setText(userProfile?.dog?.dweight) // 몸무게 설정
             }
         })
 
