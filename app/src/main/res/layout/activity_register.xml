@@ -7,25 +7,16 @@
     android:background="#FFFFFF"
     android:clickable="false">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/loginground"
-        app:layout_constraintBottom_toTopOf="@id/con2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/con2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView4">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <EditText
             android:id="@+id/et_registration_id"
@@ -53,7 +44,6 @@
             android:id="@+id/registration_iv"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginTop="32dp"
             android:src="@drawable/addimage"
             app:layout_constraintBottom_toTopOf="@+id/et_registration_id"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,9 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:drawableLeft="@drawable/drawable_password"
             android:drawablePadding="10dp"
             android:hint="Password"
@@ -76,7 +64,6 @@
             android:textColor="#000000"
             android:textColorHint="#888888"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/et_registration_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_registration_id" />
@@ -86,27 +73,81 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="50dp"
             android:text="Sign Up"
             android:textColor="#FFFFFF"
             app:backgroundTint="#FFFF9800"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_registration_name" />
+            app:layout_constraintTop_toBottomOf="@+id/et_registration_dogweight" />
+
+        <EditText
+            android:id="@+id/et_registration_dogclass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/drawable_name"
+            android:drawablePadding="10dp"
+            android:hint="견종"
+            android:paddingLeft="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/et_registration_dogage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_registration_name"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/et_registration_dogage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/drawable_name"
+            android:drawablePadding="10dp"
+            android:hint="나이"
+            android:paddingLeft="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/et_registration_dogweight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_registration_dogclass"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/et_registration_dogweight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/drawable_name"
+            android:drawablePadding="10dp"
+            android:hint="몸무게"
+            android:paddingLeft="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_registration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_registration_dogage"
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/et_registration_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:drawableLeft="@drawable/drawable_name"
             android:drawablePadding="10dp"
             android:hint="Name"
@@ -114,10 +155,12 @@
             android:textColor="#000000"
             android:textColorHint="#888888"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_registration"
+            app:layout_constraintBottom_toTopOf="@+id/et_registration_dogclass"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_registration_password" />
+            app:layout_constraintTop_toBottomOf="@+id/et_registration_password"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
