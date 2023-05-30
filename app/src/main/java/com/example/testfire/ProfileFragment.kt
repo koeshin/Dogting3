@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
         private var imageUri: Uri? = null
         private val fireStorage = FirebaseStorage.getInstance().reference
         private val fireDatabase = FirebaseDatabase.getInstance().reference
-        private val user = Firebase.auth.currentUser
+        private val user = Firebase.auth.currentUser //회원정보
         private val uid = user?.uid.toString()
 
         fun newInstance(): ProfileFragment {

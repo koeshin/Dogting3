@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private var friend: ArrayList<Friend> = arrayListOf()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,18 +53,44 @@ class HomeFragment : Fragment() {
 
         init {
             val myUid = Firebase.auth.currentUser?.uid.toString()
+
+            FirebaseDatabase.getInstance().reference.child("users").child(myUid).child("location")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val myLocation = snapshot.getValue(String::class.java)
+                        retrieveFriendList(myUid, myLocation)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // 오류 처리
+                    }
+                })
+        }
+
+        private fun retrieveFriendList(myUid: String, myLocation: String?) {
             FirebaseDatabase.getInstance().reference.child("users")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
+                        // 오류 처리
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
                         friend.clear()
+
                         for (data in snapshot.children) {
                             val item = data.getValue<Friend>()
-                            if (item?.uid.equals(myUid)) continue // 본인은 친구창에서 제외
-                            friend.add(item!!)
+                            if (item?.uid.equals(myUid)) {
+                                // 본인은 친구창에서 제외
+                                // 본인 Friend 값 가져
+                                continue
+                            }
+
+                            val location = item?.location
+                            if (location == myLocation) {
+                                friend.add(item!!)
+                            }
                         }
+
                         notifyDataSetChanged()
                     }
                 })

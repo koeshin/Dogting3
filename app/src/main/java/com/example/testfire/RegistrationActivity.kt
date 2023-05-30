@@ -63,6 +63,7 @@ class RegistrationActivity: AppCompatActivity() {
         val dclass = findViewById<EditText>(R.id.et_registration_dogclass).text
         val dage = findViewById<EditText>(R.id.et_registration_dogage).text
         val dweight = findViewById<EditText>(R.id.et_registration_dogweight).text
+        val dong=findViewById<EditText>(R.id.et_registration_location).text
         val profile = findViewById<ImageView>(R.id.registration_iv)
         var profileCheck = false
 
@@ -76,10 +77,10 @@ class RegistrationActivity: AppCompatActivity() {
         val intent = Intent(this, LogInActivity2::class.java)
 
         button.setOnClickListener {
-            // ... 이전 코드 생략 ...
+
 
             if (email.isEmpty() && password.isEmpty() && name.isEmpty() && dclass.isEmpty() && dweight.isEmpty() && dage.isEmpty() && profileCheck) {
-                Toast.makeText(this, "아이디와 비밀번호, 프로필 사진을 제대로 입력해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 Log.d("Email", "$email, $password,$dclass,$dweight,$dweight")
             } else {
                 if (!profileCheck) {
@@ -104,6 +105,7 @@ class RegistrationActivity: AppCompatActivity() {
                                     name = name.toString(),
                                     profileImageUrl = "",  // 프로필 이미지 URL은 이후에 설정됩니다.
                                     uid = userIdSt,
+                                    location=dong.toString(),
                                     dog = dog
                                 )
 
