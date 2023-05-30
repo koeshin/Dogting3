@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-
+import org.w3c.dom.Text
 
 
 class ProfileFragment : Fragment() {
@@ -79,6 +79,7 @@ class ProfileFragment : Fragment() {
         dogClassEditText = view.findViewById(R.id.dogclass)
         dogAgeEditText = view.findViewById(R.id.dogage)
         dogWeightEditText = view.findViewById(R.id.dogweight)
+        val profile_location=view.findViewById<TextView>(R.id.profil_location)
 
         //프로필 구현
         fireDatabase.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -95,6 +96,7 @@ class ProfileFragment : Fragment() {
                 dogClassEditText.setText(userProfile?.dog?.dclass) // 견종 설정
                 dogAgeEditText.setText(userProfile?.dog?.dage) // 나이 설정
                 dogWeightEditText.setText(userProfile?.dog?.dweight) // 몸무게 설정
+                profile_location?.text=userProfile?.location   // 위치 설정
             }
         })
 
@@ -105,11 +107,11 @@ class ProfileFragment : Fragment() {
             getContent.launch(intentImage)
         }
 
-        button?.setOnClickListener {
-            if (name?.text!!.isNotEmpty()) {
-                fireDatabase.child("users/$uid/name").setValue(name.text.toString())
-                name.clearFocus()
-                Toast.makeText(requireContext(), "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+        button?.setOnClickListener { // 동 바꾸기
+            if (profile_location?.text!!.isNotEmpty()) {
+                fireDatabase.child("users/$uid/location").setValue(profile_location.text.toString())
+                profile_location.clearFocus()
+                Toast.makeText(requireContext(), "위치가 변경되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 

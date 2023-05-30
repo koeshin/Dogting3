@@ -22,14 +22,14 @@
         android:id="@+id/profile_textview_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:text="TextView"
+
         android:textColor="#505050"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_imageview"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
 
     <EditText
         android:id="@+id/profile_textview_name"
@@ -45,19 +45,6 @@
         app:layout_constraintBottom_toTopOf="@+id/profile_imageview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/profile_button"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="Change"
-        android:textColor="#FFFFFF"
-        app:backgroundTint="#FFFF9800"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_imageview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintStart_toEndOf="@+id/profile_textview_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -164,6 +151,45 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_textview_email">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="위치:"
+            android:textColor="#E91E63"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/profil_location"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#F44336"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="변경"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:backgroundTint="#FFFF9800" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
