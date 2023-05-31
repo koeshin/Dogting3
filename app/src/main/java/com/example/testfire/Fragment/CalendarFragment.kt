@@ -28,11 +28,8 @@ class CalendarFragment : Fragment() {
     private val fireDatabase = FirebaseDatabase.getInstance().reference
     private val user = Firebase.auth.currentUser //회원정보
     private val uid = user?.uid.toString()
-    private var fname: String? = null
     private var str: String? = null
     private var calendarView: CalendarView? = null
-    private var cha_Btn: Button? = null
-    private var del_Btn: Button? = null
     private var save_Btn: Button? = null
     private var diaryTextView: TextView? = null
     private var textView2: TextView? = null
@@ -82,6 +79,7 @@ class CalendarFragment : Fragment() {
 //            del_Btn?.visibility = View.INVISIBLE
             diaryTextView?.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             contextEditText?.setText("")
+            calendarwalk?.text = "0"
 //            checkDay(year, month, dayOfMonth, uid)
             fetchDataFromFirebase(year.toString(), (month + 1).toString(), dayOfMonth.toString())
         }
@@ -128,7 +126,7 @@ class CalendarFragment : Fragment() {
                         }
                     }
                 } else {
-                    calendarwalk?.text = ""
+                    calendarwalk?.text = "0"
                     contextEditText?.setText("")
                 }
             }
@@ -138,55 +136,55 @@ class CalendarFragment : Fragment() {
             }
         })
     }
-    private fun checkDay(cYear: Int, cMonth: Int, cDay: Int, uid: String?) {
-        fname = "$uid$cYear-${cMonth + 1}$cDay.txt" // 저장할 파일 이름 설정
-        var fis: FileInputStream? = null // FileStream fis 변수
-        try {
-            fis = requireContext().openFileInput(fname)
-            val fileData = ByteArray(fis.available())
-            fis.read(fileData)
-            fis.close()
-            str = String(fileData)
-            contextEditText?.visibility = View.INVISIBLE
-            textView2?.visibility = View.VISIBLE
-            textView2?.text = str
-            save_Btn?.visibility = View.INVISIBLE
-            cha_Btn?.visibility = View.VISIBLE
-            del_Btn?.visibility = View.VISIBLE
-
-            cha_Btn?.setOnClickListener {
-                contextEditText?.visibility = View.VISIBLE
-                textView2?.visibility = View.INVISIBLE
-                contextEditText?.setText(str)
-                save_Btn?.visibility = View.VISIBLE
-                cha_Btn?.visibility = View.INVISIBLE
-                del_Btn?.visibility = View.INVISIBLE
-                textView2?.text = contextEditText?.text
-            }
-
-            del_Btn?.setOnClickListener {
-                textView2?.visibility = View.INVISIBLE
-                contextEditText?.setText("")
-                contextEditText?.visibility = View.VISIBLE
-                save_Btn?.visibility = View.VISIBLE
-                cha_Btn?.visibility = View.INVISIBLE
-                del_Btn?.visibility = View.INVISIBLE
-                removeDiary(fname)
-            }
-
-            if (textView2?.text.isNullOrEmpty()) {
-                textView2?.visibility = View.INVISIBLE
-                diaryTextView?.visibility = View.VISIBLE
-                save_Btn?.visibility = View.VISIBLE
-                cha_Btn?.visibility = View.INVISIBLE
-                del_Btn?.visibility = View.INVISIBLE
-                contextEditText?.visibility = View.VISIBLE
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+//    private fun checkDay(cYear: Int, cMonth: Int, cDay: Int, uid: String?) {
+//        fname = "$uid$cYear-${cMonth + 1}$cDay.txt" // 저장할 파일 이름 설정
+//        var fis: FileInputStream? = null // FileStream fis 변수
+//        try {
+//            fis = requireContext().openFileInput(fname)
+//            val fileData = ByteArray(fis.available())
+//            fis.read(fileData)
+//            fis.close()
+//            str = String(fileData)
+//            contextEditText?.visibility = View.INVISIBLE
+//            textView2?.visibility = View.VISIBLE
+//            textView2?.text = str
+//            save_Btn?.visibility = View.INVISIBLE
+//            cha_Btn?.visibility = View.VISIBLE
+//            del_Btn?.visibility = View.VISIBLE
+//
+//            cha_Btn?.setOnClickListener {
+//                contextEditText?.visibility = View.VISIBLE
+//                textView2?.visibility = View.INVISIBLE
+//                contextEditText?.setText(str)
+//                save_Btn?.visibility = View.VISIBLE
+//                cha_Btn?.visibility = View.INVISIBLE
+//                del_Btn?.visibility = View.INVISIBLE
+//                textView2?.text = contextEditText?.text
+//            }
+//
+//            del_Btn?.setOnClickListener {
+//                textView2?.visibility = View.INVISIBLE
+//                contextEditText?.setText("")
+//                contextEditText?.visibility = View.VISIBLE
+//                save_Btn?.visibility = View.VISIBLE
+//                cha_Btn?.visibility = View.INVISIBLE
+//                del_Btn?.visibility = View.INVISIBLE
+//                removeDiary(fname)
+//            }
+//
+//            if (textView2?.text.isNullOrEmpty()) {
+//                textView2?.visibility = View.INVISIBLE
+//                diaryTextView?.visibility = View.VISIBLE
+//                save_Btn?.visibility = View.VISIBLE
+//                cha_Btn?.visibility = View.INVISIBLE
+//                del_Btn?.visibility = View.INVISIBLE
+//                contextEditText?.visibility = View.VISIBLE
+//            }
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
 
     private fun removeDiary(readDay: String?) {
         var fos: FileOutputStream? = null
@@ -200,17 +198,17 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    private fun saveDiary(readDay: String?) {
-        var fos: FileOutputStream? = null
-        try {
-            fos = requireContext().openFileOutput(readDay, AppCompatActivity.MODE_PRIVATE)
-            val content = contextEditText?.text.toString()
-            fos.write(content.toByteArray())
-            fos.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+//    private fun saveDiary(readDay: String?) {
+//        var fos: FileOutputStream? = null
+//        try {
+//            fos = requireContext().openFileOutput(readDay, AppCompatActivity.MODE_PRIVATE)
+//            val content = contextEditText?.text.toString()
+//            fos.write(content.toByteArray())
+//            fos.close()
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
 
     companion object {
         fun newInstance(): CalendarFragment {

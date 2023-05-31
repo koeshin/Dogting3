@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="location_hint">동명(읍, 면)으로 검색 (ex. 서초동)</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
