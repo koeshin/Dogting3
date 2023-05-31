@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.testfire.Fragment.ProfileFragment
 import com.example.testfire.model.Friend
+import com.example.testfire.model.walkNmemo
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,6 +38,10 @@ class CalendarFragment : Fragment() {
     private var textView2: TextView? = null
     private var textView3: TextView? = null
     private var contextEditText: EditText? = null
+    private var textView:TextView?=null
+    private var calendarwalk:TextView?=null
+    val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_calendar, container, false)
@@ -46,11 +49,13 @@ class CalendarFragment : Fragment() {
         calendarView = view.findViewById(R.id.calendarView)
         diaryTextView = view.findViewById(R.id.diaryTextView)
         save_Btn = view.findViewById(R.id.manbo_save_Btn)
-        del_Btn = view.findViewById(R.id.del_Btn)
-        cha_Btn = view.findViewById(R.id.cha_Btn)
+//        del_Btn = view.findViewById(R.id.del_Btn)
+//        cha_Btn = view.findViewById(R.id.cha_Btn)
         textView2 = view.findViewById(R.id.textmemo)
         textView3 = view.findViewById(R.id.textView3)
         contextEditText = view.findViewById(R.id.contextEditText)
+        textView=view.findViewById(R.id.textview)
+        calendarwalk=view.findViewById(R.id.calendarwalk)
         val currentSteps = arguments?.getInt("currentSteps", 0) ?: 0
         textView2?.text = currentSteps.toString()
 
@@ -70,28 +75,69 @@ class CalendarFragment : Fragment() {
             diaryTextView?.visibility = View.VISIBLE
             save_Btn?.visibility = View.VISIBLE
             contextEditText?.visibility = View.VISIBLE
+            textView?.visibility=View.VISIBLE
+            calendarwalk?.visibility=View.VISIBLE
             textView2?.visibility = View.INVISIBLE
-            cha_Btn?.visibility = View.INVISIBLE
-            del_Btn?.visibility = View.INVISIBLE
+//            cha_Btn?.visibility = View.INVISIBLE
+//            del_Btn?.visibility = View.INVISIBLE
             diaryTextView?.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             contextEditText?.setText("")
-            checkDay(year, month, dayOfMonth, uid)
+//            checkDay(year, month, dayOfMonth, uid)
+            fetchDataFromFirebase(year.toString(), (month + 1).toString(), dayOfMonth.toString())
         }
 
         save_Btn?.setOnClickListener {
-            saveDiary(fname)
+//            saveDiary(fname)
             str = contextEditText?.text.toString()
             textView2?.text = str
             save_Btn?.visibility = View.INVISIBLE
-            cha_Btn?.visibility = View.VISIBLE
-            del_Btn?.visibility = View.VISIBLE
+//            cha_Btn?.visibility = View.VISIBLE
+//            del_Btn?.visibility = View.VISIBLE
             contextEditText?.visibility = View.INVISIBLE
             textView2?.visibility = View.VISIBLE
+            if (contextEditText?.text!!.isNotEmpty()) {
+                fireDatabase.child("walkData/$uid/memo").setValue(contextEditText?.text.toString())
+                contextEditText?.clearFocus()
+                Toast.makeText(requireContext(), "메모가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        return view
-    }
 
+
+        return view
+
+    }
+    private fun fetchDataFromFirebase(year: String, month: String, dayOfMonth: String) {
+        val database = FirebaseDatabase.getInstance()
+
+        val reference = database.reference.child("walkData").child(currentUserUid)
+
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (snapshot in dataSnapshot.children) {
+                        val wm = dataSnapshot.getValue(walkNmemo::class.java)
+
+                        if (wm != null && wm?.year == year && wm.month == month && wm.monthDay == dayOfMonth) {
+                            val steps = wm?.walk
+                            val memo = wm?.memo
+
+                            calendarwalk?.text = steps.toString()
+                            contextEditText?.setText(memo)
+                            break
+                        }
+                    }
+                } else {
+                    calendarwalk?.text = ""
+                    contextEditText?.setText("")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(requireContext(), "Failed to fetch data from Firebase", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
     private fun checkDay(cYear: Int, cMonth: Int, cDay: Int, uid: String?) {
         fname = "$uid$cYear-${cMonth + 1}$cDay.txt" // 저장할 파일 이름 설정
         var fis: FileInputStream? = null // FileStream fis 변수

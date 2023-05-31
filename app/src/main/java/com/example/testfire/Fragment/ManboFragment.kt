@@ -110,7 +110,7 @@ class ManboFragment : Fragment(), SensorEventListener {
                 memoTextView?.visibility = View.VISIBLE
                 memoEditText?.visibility=View.VISIBLE
                 val memo = memoEditText?.text.toString()
-                saveDataToFirebase(currentSteps, memo)
+                saveDataToFirebase(currentSteps.toString(), memo)
                 memoTextView?.visibility = View.INVISIBLE
                 memoEditText?.visibility=View.INVISIBLE
                 saveButton?.visibility=View.INVISIBLE
@@ -164,13 +164,13 @@ class ManboFragment : Fragment(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
-    private fun saveDataToFirebase(steps: Int, memo: String) {
+    private fun saveDataToFirebase(steps: String, memo: String) {
         val data = walkNmemo(
             walk = steps,
             memo = memo,
-            year = Year.now().value,
-            month = Month.from(LocalDate.now()).value,
-            monthDay = MonthDay.from(LocalDate.now()).dayOfMonth
+            year = Year.now().value.toString(),
+            month = Month.from(LocalDate.now()).value.toString(),
+            monthDay = MonthDay.from(LocalDate.now()).dayOfMonth.toString()
         )
         val database = FirebaseDatabase.getInstance()
         val reference = database.reference.child("walkData").child(currentUserUid)

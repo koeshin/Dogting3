@@ -5,10 +5,10 @@ import java.time.MonthDay
 import java.time.Year
 
 data class walkNmemo(
-    var walk:Int?=null,
+    var walk:String?=null,
     var memo: String? ="",
-    val year: Int=0,
-    val month: Int=0,
-    val monthDay: Int=0
+    val year: String?=null,
+    val month: String?=null,
+    val monthDay: String?=null
 
 )
