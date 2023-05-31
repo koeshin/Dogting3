@@ -1,4 +1,4 @@
-package com.example.testfire
+package com.example.testfire.Fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-
+import com.example.testfire.model.Friend
+import com.example.testfire.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,16 +24,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import org.w3c.dom.Text
-
 
 class ProfileFragment : Fragment() {
     companion object {
         private var imageUri: Uri? = null
         private val fireStorage = FirebaseStorage.getInstance().reference
-        private val fireDatabase = FirebaseDatabase.getInstance().reference
+        val fireDatabase = FirebaseDatabase.getInstance().reference
         private val user = Firebase.auth.currentUser //회원정보
-        private val uid = user?.uid.toString()
+        val uid = user?.uid.toString()
 
         fun newInstance(): ProfileFragment {
             return ProfileFragment()
@@ -76,13 +75,15 @@ class ProfileFragment : Fragment() {
         val email = view.findViewById<TextView>(R.id.profile_textview_email)
         val name = view.findViewById<TextView>(R.id.profile_textview_name)
         val button = view.findViewById<Button>(R.id.profile_button)
-        dogClassEditText = view.findViewById(R.id.dogclass)
-        dogAgeEditText = view.findViewById(R.id.dogage)
-        dogWeightEditText = view.findViewById(R.id.dogweight)
+        val dogClassEditText = view.findViewById<EditText>(R.id.dogclass)
+        val dogAgeEditText = view.findViewById<EditText>(R.id.dogage)
+        val dogSexEditText=view.findViewById<EditText>(R.id.dogsex)
+        val dogCharactertEditText = view.findViewById<EditText>(R.id.dogcharacter)
         val profile_location=view.findViewById<TextView>(R.id.profil_location)
 
         //프로필 구현
-        fireDatabase.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+        fireDatabase.child("users").child(uid).addListenerForSingleValueEvent(object :
+            ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userProfile = snapshot.getValue<Friend>()
@@ -94,8 +95,9 @@ class ProfileFragment : Fragment() {
                 email?.text = userProfile?.email
                 name?.text = userProfile?.name
                 dogClassEditText.setText(userProfile?.dog?.dclass) // 견종 설정
+                dogSexEditText.setText(userProfile?.dog?.dsex)
                 dogAgeEditText.setText(userProfile?.dog?.dage) // 나이 설정
-                dogWeightEditText.setText(userProfile?.dog?.dweight) // 몸무게 설정
+                dogCharactertEditText.setText(userProfile?.dog?.dcharacter) // 성격 설정
                 profile_location?.text=userProfile?.location   // 위치 설정
             }
         })

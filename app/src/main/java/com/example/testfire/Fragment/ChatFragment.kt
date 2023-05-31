@@ -1,28 +1,22 @@
-package com.example.testfire
+package com.example.testfire.Fragment
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-
-
-
-
-
+import com.example.testfire.model.ChatModel
+import com.example.testfire.model.Friend
+import com.example.testfire.MessageActivity
+import com.example.testfire.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,12 +24,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-
 import java.util.*
-import java.util.Collections.reverse
-import java.util.Collections.reverseOrder
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class ChatFragment : Fragment() {
     companion object{
@@ -78,7 +68,8 @@ class ChatFragment : Fragment() {
             uid = Firebase.auth.currentUser?.uid.toString()
             println(uid)
 
-            fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
+            fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object :
+                ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -93,7 +84,8 @@ class ChatFragment : Fragment() {
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
 
-            return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.item_chat, parent, false))
+            return CustomViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.item_chat, parent, false))
         }
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -111,7 +103,8 @@ class ChatFragment : Fragment() {
                     destinationUsers.add(destinationUid)
                 }
             }
-            fireDatabase.child("users").child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener {
+            fireDatabase.child("users").child("$destinationUid").addListenerForSingleValueEvent(object :
+                ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -123,7 +116,7 @@ class ChatFragment : Fragment() {
                 }
             })
             //메세지 내림차순 정렬 후 마지막 메세지의 키값을 가져옴
-            val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
+            val commentMap = TreeMap<String, ChatModel.Comment>(Collections.reverseOrder())
             commentMap.putAll(chatModel[position].comments)
             val lastMessageKey = commentMap.keys.toTypedArray()[0]
             holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message

@@ -1,6 +1,4 @@
-package com.example.testfire
-
-import android.location.Location
+package com.example.testfire.model
 
 data class Friend(
     val email : String? = null,
@@ -14,6 +12,6 @@ data class Friend(
 data class Dog(
     val dclass: String? = null, //견종
     val dage: String? = null,   // 나이
-    val dweight: String? = null  // 몸무게
-                                // 나이, 성격
+    val dsex: String? = null,  // 성별
+    val dcharacter:String?=null    //성격
 )

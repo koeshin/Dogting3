@@ -42,22 +42,60 @@
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/home_item_email"
+            app:layout_constraintBottom_toTopOf="@+id/home_item_class"
             app:layout_constraintStart_toEndOf="@+id/home_item_iv"
             app:layout_constraintTop_toTopOf="@+id/home_item_iv" />
 
         <TextView
-            android:id="@+id/home_item_email"
+            android:id="@+id/home_item_character"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="26dp"
+            android:layout_marginStart="176dp"
             android:layout_marginTop="6dp"
-            android:text="이메일"
+            android:text="성격"
             android:textColor="#8A252525"
-            app:layout_constraintBottom_toBottomOf="@+id/home_item_iv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_item_iv"
+            app:layout_constraintTop_toBottomOf="@+id/home_item_tv"
+            app:layout_constraintVertical_bias="0.333" />
+
+        <TextView
+            android:id="@+id/home_item_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
+            android:text="견종"
+            android:textColor="#8A252525"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/home_item_iv"
             app:layout_constraintTop_toBottomOf="@+id/home_item_tv" />
+
+        <TextView
+            android:id="@+id/home_item_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="6dp"
+            android:text="성별"
+            android:textColor="#8A252525"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_item_iv"
+            app:layout_constraintTop_toBottomOf="@+id/home_item_tv"
+            app:layout_constraintVertical_bias="0.333" />
+
+        <TextView
+            android:id="@+id/home_item_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="6dp"
+            android:text="나이"
+            android:textColor="#8A252525"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_item_iv"
+            app:layout_constraintTop_toBottomOf="@+id/home_item_tv"
+            app:layout_constraintVertical_bias="0.333" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

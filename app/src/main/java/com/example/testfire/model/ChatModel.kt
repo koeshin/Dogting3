@@ -1,4 +1,4 @@
-package com.example.testfire
+package com.example.testfire.model
 
 import kotlin.collections.HashMap
 

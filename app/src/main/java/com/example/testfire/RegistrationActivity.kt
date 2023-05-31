@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import com.example.testfire.model.Dog
+import com.example.testfire.model.Friend
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -61,8 +63,9 @@ class RegistrationActivity: AppCompatActivity() {
         val name = findViewById<EditText>(R.id.et_registration_name).text
         val button = findViewById<Button>(R.id.btn_registration)
         val dclass = findViewById<EditText>(R.id.et_registration_dogclass).text
+        val dsex =findViewById<EditText>(R.id.et_registration_dogsex).text
         val dage = findViewById<EditText>(R.id.et_registration_dogage).text
-        val dweight = findViewById<EditText>(R.id.et_registration_dogweight).text
+        val dcharacter = findViewById<EditText>(R.id.et_registration_dogcharacter).text
         val dong=findViewById<EditText>(R.id.et_registration_location).text
         val profile = findViewById<ImageView>(R.id.registration_iv)
         var profileCheck = false
@@ -79,9 +82,9 @@ class RegistrationActivity: AppCompatActivity() {
         button.setOnClickListener {
 
 
-            if (email.isEmpty() && password.isEmpty() && name.isEmpty() && dclass.isEmpty() && dweight.isEmpty() && dage.isEmpty() && profileCheck) {
+            if (email.isEmpty() && password.isEmpty() && name.isEmpty() && dclass.isEmpty() && dsex.isEmpty() && dage.isEmpty()&&dcharacter.isEmpty() && profileCheck) {
                 Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                Log.d("Email", "$email, $password,$dclass,$dweight,$dweight")
+                Log.d("Email", "$email, $password,$dclass")
             } else {
                 if (!profileCheck) {
                     Toast.makeText(this, "프로필사진을 등록해주세요.", Toast.LENGTH_SHORT).show()
@@ -96,7 +99,8 @@ class RegistrationActivity: AppCompatActivity() {
                                 val dog = Dog(
                                     dclass = dclass.toString(),
                                     dage = dage.toString(),
-                                    dweight = dweight.toString()
+                                    dsex = dsex.toString(),
+                                    dcharacter=dcharacter.toString()
                                 )
 
                                 // Friend 객체 생성 및 값을 설정합니다.

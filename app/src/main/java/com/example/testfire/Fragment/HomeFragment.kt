@@ -1,27 +1,25 @@
-package com.example.testfire
+package com.example.testfire.Fragment
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-
+import com.example.testfire.model.Friend
+import com.example.testfire.MessageActivity
+import com.example.testfire.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-
 
 class HomeFragment : Fragment() {
     companion object {
@@ -105,7 +103,11 @@ class HomeFragment : Fragment() {
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val imageView: ImageView = itemView.findViewById(R.id.home_item_iv)
             val textView: TextView = itemView.findViewById(R.id.home_item_tv)
-            val textViewEmail: TextView = itemView.findViewById(R.id.home_item_email)
+            val textViewcharacter: TextView = itemView.findViewById(R.id.home_item_character)
+            val textViewclass: TextView = itemView.findViewById(R.id.home_item_class)
+            val textViewsex: TextView = itemView.findViewById(R.id.home_item_sex)
+            val textViewage: TextView = itemView.findViewById(R.id.home_item_age)
+
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -114,7 +116,10 @@ class HomeFragment : Fragment() {
                 .transform(CircleCrop())
                 .into(holder.imageView)
             holder.textView.text = friend[position].name
-            holder.textViewEmail.text = friend[position].email
+            holder.textViewcharacter.text = friend[position].dog?.dcharacter
+            holder.textViewclass.text = friend[position].dog?.dclass
+            holder.textViewage.text = friend[position].dog?.dage
+            holder.textViewclass.text = friend[position].dog?.dsex
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, MessageActivity::class.java)

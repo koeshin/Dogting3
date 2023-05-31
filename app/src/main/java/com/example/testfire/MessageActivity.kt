@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.testfire.databinding.ActivityMessageBinding
 import com.example.testfire.databinding.ItemMessageBinding
+import com.example.testfire.model.ChatModel
+import com.example.testfire.model.Friend
 
 
 import com.google.firebase.auth.ktx.auth

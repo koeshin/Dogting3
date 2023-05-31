@@ -2,6 +2,9 @@ package com.example.testfire
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.testfire.Fragment.ChatFragment
+import com.example.testfire.Fragment.HomeFragment
+import com.example.testfire.Fragment.ProfileFragment
 import com.example.testfire.databinding.ActivityMainBinding
 
 
