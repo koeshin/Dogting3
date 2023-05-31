@@ -24,8 +24,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
-
-
 lateinit var auth: FirebaseAuth
 lateinit var database: DatabaseReference
 
@@ -34,12 +32,12 @@ class RegistrationActivity: AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private  var registration_iv : ImageView? =null
     private var imageUri : Uri? = null
-   
-    //이미지 등록
+
+    // 이미지 등록을 위한 ActivityResultLauncher
     private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            imageUri = result.data?.data // 이미지 경로 원본
-            registration_iv?.setImageURI(imageUri) // 이미지 뷰를 바꿈
+            imageUri = result.data?.data // 선택한 이미지의 원본 경로
+            registration_iv?.setImageURI(imageUri) // 이미지 뷰에 이미지 설정
             Log.d("이미지", "성공")
         } else {
             Log.d("이미지", "실패")
@@ -57,9 +55,10 @@ class RegistrationActivity: AppCompatActivity() {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             1
         )
+
+        // EditText와 Button, ImageView 등 필요한 뷰 요소들 초기화
         val email = findViewById<EditText>(R.id.et_registration_id).text
         val password = findViewById<EditText>(R.id.et_registration_password).text
-
         val name = findViewById<EditText>(R.id.et_registration_name).text
         val button = findViewById<Button>(R.id.btn_registration)
         val dclass = findViewById<EditText>(R.id.et_registration_dogclass).text
@@ -70,6 +69,7 @@ class RegistrationActivity: AppCompatActivity() {
         val profile = findViewById<ImageView>(R.id.registration_iv)
         var profileCheck = false
 
+        // 프로필 이미지를 선택하기 위한 클릭 리스너 설정
         profile.setOnClickListener {
             val intentImage = Intent(Intent.ACTION_PICK)
             intentImage.type = MediaStore.Images.Media.CONTENT_TYPE
@@ -80,15 +80,14 @@ class RegistrationActivity: AppCompatActivity() {
         val intent = Intent(this, LogInActivity2::class.java)
 
         button.setOnClickListener {
-
-
-            if (email.isEmpty() && password.isEmpty() && name.isEmpty() && dclass.isEmpty() && dsex.isEmpty() && dage.isEmpty()&&dcharacter.isEmpty() && profileCheck) {
+            if (email.isEmpty() && password.isEmpty() && name.isEmpty() && dclass.isEmpty() && dsex.isEmpty() && dage.isEmpty() && dcharacter.isEmpty() && profileCheck) {
                 Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 Log.d("Email", "$email, $password,$dclass")
             } else {
                 if (!profileCheck) {
-                    Toast.makeText(this, "프로필사진을 등록해주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "프로필 사진을 등록해주세요.", Toast.LENGTH_SHORT).show()
                 } else {
+                    // Firebase에 사용자 계정 생성
                     auth.createUserWithEmailAndPassword(email.toString(), password.toString())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
@@ -103,7 +102,7 @@ class RegistrationActivity: AppCompatActivity() {
                                     dcharacter=dcharacter.toString()
                                 )
 
-                                // Friend 객체 생성 및 값을 설정합니다.
+                                // Friend 객체 생성 및 값 설정
                                 val friend = Friend(
                                     email = email.toString(),
                                     name = name.toString(),
@@ -123,7 +122,7 @@ class RegistrationActivity: AppCompatActivity() {
                                                     uri.toString()  // 프로필 이미지 URL 설정
                                                 Log.d("이미지 URL", "${friend.profileImageUrl}")
 
-                                                // Friend 객체를 Firebase Realtime Database에 저장합니다.
+                                                // Friend 객체를 Firebase Realtime Database에 저장
                                                 database.child("users").child(userId.toString())
                                                     .setValue(friend)
                                                     .addOnSuccessListener {
@@ -148,9 +147,10 @@ class RegistrationActivity: AppCompatActivity() {
             }
         }
     }
-            public override fun onStart() {
+
+    public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // 사용자가 로그인한 상태인지 확인하고 UI를 업데이트합니다.
         val currentUser = auth.currentUser
         if(currentUser != null){
             reload();
@@ -158,6 +158,7 @@ class RegistrationActivity: AppCompatActivity() {
     }
 
     private fun reload() {
+
     }
 
     companion object {
