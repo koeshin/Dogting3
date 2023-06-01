@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/registration_iv"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="132dp"
+            android:layout_height="105dp"
             android:src="@drawable/addimage"
             app:layout_constraintBottom_toTopOf="@+id/et_registration_id"
             app:layout_constraintEnd_toEndOf="parent"
