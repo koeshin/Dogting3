@@ -72,24 +72,20 @@ class MessageActivity : AppCompatActivity() {
             if (chatRoomUid == null) {
                 imageView.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatModel).addOnSuccessListener {
-                    //채팅방 생성
+                    // 채팅방 생성
                     checkChatRoom()
-                    //메세지 보내기
-                    Handler().postDelayed({
-                        println(chatRoomUid)
-                        fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
-                            .push().setValue(comment)
-                        binding.messageActivityEditText.text = null
-                    }, 1000L)
+                    // imageView.isEnabled = true // 이 부분은 제거
                     Log.d("chatUidNull dest", "$destinationUid")
                 }
             } else {
                 fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
-                    .push().setValue(comment)
-                binding.messageActivityEditText.text = null
-                Log.d("chatUidNotNull dest", "$destinationUid")
+                    .push().setValue(comment).addOnSuccessListener { // 메시지를 보내는 부분을 분리하여 추가
+                        binding.messageActivityEditText.text = null
+                        Log.d("chatUidNotNull dest", "$destinationUid")
+                    }
             }
         }
+
         checkChatRoom()
     }
 

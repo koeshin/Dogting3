@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
             val myUid = Firebase.auth.currentUser?.uid.toString()
 
             FirebaseDatabase.getInstance().reference.child("users").child(myUid).child("location")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val myLocation = snapshot.getValue(String::class.java)
                         retrieveFriendList(myUid, myLocation)
